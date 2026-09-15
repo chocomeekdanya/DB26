@@ -1,0 +1,25 @@
+The purpose of this database is to store and manage information related to an international airport. It covers airports, airlines, flights, passengers, bookings, boarding passes, baggage, and security checks.
+
+The main table in the database is Airports. It stores basic information about each airport, such as its name, country, state, and city. Each airport has its own airport_id, which is the primary key. I also included creation_time and update_time to keep track of when the airport information was added or changed.
+
+The Airlines table contains information about airline companies. It stores the airline code, name, country, and the dates when the record was created and updated. The airline_id is the primary key. One airline can operate many flights, so there is a one-to-many relationship between Airlines and Flights.
+
+The Flights table contains information about individual flights. It includes the departure and arrival gates, the airline, departure airport, arrival airport, and different times related to the flight. I separated the scheduled and actual departure and arrival times because a flight can be delayed or arrive earlier than originally scheduled. The airline_id, departure_airport_id, and arriving_airport_id are foreign keys.
+
+There are two relationships between Airports and Flights because an airport can be used either as the departure airport or as the arrival airport. One airport can be connected to many flights.
+
+The Passengers table stores personal information about passengers. It contains their first and last name, gender, date of birth, citizenship, country of residence, and passport number. Each passenger has a unique passenger_id. The creation and update times are also stored. I made this a separate table because the same passenger can make more than one booking, so it would not make sense to repeat all of their personal information for every booking.
+
+The Bookings table connects passengers with flights. It stores the booking status, booking platform, ticket price, and the related passenger and flight IDs. One passenger can have several bookings, and one flight can have many bookings. This gives a one-to-many relationship between Passengers and Bookings, and also between Flights and Bookings.
+
+The Boarding Passes table stores information about the boarding pass issued for a booking. It includes the seat, boarding time, creation and update times, and booking_id. I kept boarding passes separate from bookings because a booking and a boarding pass contain different types of information.
+
+The Baggage table is used to store information about luggage. It contains the baggage ID, weight, creation and update times, and the booking ID. One booking can have several pieces of baggage, so there is a one-to-many relationship between Bookings and Baggage.
+
+The Baggage Checks table stores information about baggage inspections at the airport. It contains the baggage checking ID, baggage ID, passenger ID, booking ID, check result, and the creation and update times. This allows the system to keep information about whether the baggage passed the required check.
+
+The Passenger Security Checks table is used for passenger security information. It stores the passenger check ID, passenger ID, check result, and the creation and update times. A passenger can have more than one security check record, so this is also represented as a one-to-many relationship.
+
+I also added a Booking Changes table because changes to a booking should be stored separately. It keeps the booking ID, the old flight, the new flight, the time of the change, and the reason for the change. This means that if a passenger changes their flight, the database can keep a record of what the original flight was instead of simply replacing the old information.
+
+Overall, the database uses primary keys to identify individual records and foreign keys to connect the tables. Most of the relationships are one-to-many. I separated the information into different tables so that the same data does not have to be stored repeatedly. For example, passenger information is stored once in the Passengers table and can then be used for multiple bookings.
